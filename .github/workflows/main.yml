@@ -1,0 +1,17 @@
+name: Deploy to EC2 Host
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v5
+
+    - name: Run bash command
+      run: ls -al
