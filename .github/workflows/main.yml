@@ -1,37 +1,38 @@
-name: Deploy to EC2 Host
+name: Deploy to EC2
 
 on:
   push:
     branches:
       - main
 
-  jobs:
-    deploy:
-    runs-on: ubuntu-latest
+jobs:
+  deploy:
+    runs-on: self-hosted-runner1
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v5
 
-    - name: Run bash command
-      run: ls -al
-
-    - name: Copy files to EC2
+    - name: Copy code to EC2
       uses: appleboy/scp-action@v1
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_HOST_NAME }}
-        password: ${{ secrets.EC2_SSH_KEY }}
+        key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         source: ./
         target: ./
-
-    - name: Copy files to var directory
+        
+    - name: Copy files to /var/www/html
       uses: appleboy/ssh-action@v1
       with:
-       host: ${{ secrets.EC2_HOST }}
-       username: ${{ secrets.EC2_HOST_NAME }}
-       password: ${{ secrets.EC2_SSH_KEY }}
-       port: 22
-       script: sudo cp -r * /var/www/html
-        
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_HOST_NAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          ls -al
+          whoami
+          pwd
+          sudo cp -r * /var/www/html
+          sudo systemctl restart nginx
