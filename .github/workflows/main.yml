@@ -26,8 +26,8 @@ on:
         source: ./
         target: ./
 
-     - name: Copy files to var directory
-       uses: appleboy/scp-action@v1
+    - name: Copy files to var directory
+      uses: appleboy/ssh-action@v1
        with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_HOST_NAME }}
