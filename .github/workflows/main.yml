@@ -29,11 +29,9 @@ on:
     - name: Copy files to var directory
       uses: appleboy/ssh-action@v1
       with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_HOST_NAME }}
-        password: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
-        script: |
-        sudo cp -r * /var/www/html
-        sudo systemctl restart nginx
+       host: ${{ secrets.EC2_HOST }}
+       username: ${{ secrets.EC2_HOST_NAME }}
+       password: ${{ secrets.EC2_SSH_KEY }}
+       port: 22
+       script: sudo cp -r * /var/www/html
         
