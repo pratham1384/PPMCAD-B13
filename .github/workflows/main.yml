@@ -28,7 +28,7 @@ on:
 
     - name: Copy files to var directory
       uses: appleboy/ssh-action@v1
-       with:
+      with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_HOST_NAME }}
         password: ${{ secrets.EC2_SSH_KEY }}
