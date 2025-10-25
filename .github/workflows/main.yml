@@ -15,3 +15,25 @@ jobs:
 
     - name: Run bash command
       run: ls -al
+
+    - name: Copy files to EC2
+      uses: appleboy/scp-action@v1
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_HOST_NAME }}
+        password: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        source: ./
+        target: ./
+
+     - name: Copy files to var directory
+       uses: appleboy/scp-action@v1
+       with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_HOST_NAME }}
+        password: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+        sudo cp -r * /var/www/html
+        sudo systemctl restart nginx
+        
